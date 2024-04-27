@@ -8,10 +8,7 @@
 
 import {CommonModule} from '@angular/common';
 import {DocContent, DocViewer} from '@angular/docs';
-import {Component, inject} from '@angular/core';
-import {toSignal} from '@angular/core/rxjs-interop';
-import {ActivatedRoute} from '@angular/router';
-import {map} from 'rxjs/operators';
+import {Component, input} from '@angular/core';
 
 @Component({
   selector: 'docs-docs',
@@ -21,14 +18,8 @@ import {map} from 'rxjs/operators';
   templateUrl: './docs.component.html',
 })
 export default class DocsComponent {
-  private readonly activatedRoute = inject(ActivatedRoute);
-
   // Based on current route, proper static content for doc page is fetched.
   // In case when exists example-viewer placeholders, then ExampleViewer
   // components are going to be rendered.
-  private readonly documentContent$ = this.activatedRoute.data.pipe(
-    map((data) => data['docContent'] as DocContent),
-  );
-
-  documentContent = toSignal(this.documentContent$);
+  docContent = input<DocContent>();
 }

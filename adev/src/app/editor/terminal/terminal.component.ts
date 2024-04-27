@@ -12,10 +12,10 @@ import {
   Component,
   DestroyRef,
   ElementRef,
-  Input,
   ViewChild,
   ViewEncapsulation,
   inject,
+  input,
 } from '@angular/core';
 
 import {fromEvent} from 'rxjs/internal/observable/fromEvent';
@@ -37,7 +37,7 @@ import {NgIf} from '@angular/common';
   encapsulation: ViewEncapsulation.None,
 })
 export class Terminal implements AfterViewInit {
-  @Input({required: true}) type!: TerminalType;
+  type = input.required<TerminalType>();
   @ViewChild('terminalOutput') private terminalElementRef!: ElementRef<HTMLElement>;
 
   private readonly destroyRef = inject(DestroyRef);
@@ -45,7 +45,7 @@ export class Terminal implements AfterViewInit {
   private readonly window = inject(WINDOW);
 
   ngAfterViewInit() {
-    this.terminalHandler.registerTerminal(this.type, this.terminalElementRef.nativeElement);
+    this.terminalHandler.registerTerminal(this.type(), this.terminalElementRef.nativeElement);
 
     fromEvent(this.window, 'resize')
       .pipe(debounceTime(50), takeUntilDestroyed(this.destroyRef))
@@ -55,6 +55,6 @@ export class Terminal implements AfterViewInit {
   }
 
   private handleResize(): void {
-    this.terminalHandler.resizeToFitParent(this.type);
+    this.terminalHandler.resizeToFitParent(this.type());
   }
 }

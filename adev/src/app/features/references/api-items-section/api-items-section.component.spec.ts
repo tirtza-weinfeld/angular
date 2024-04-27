@@ -14,6 +14,7 @@ import {ApiReferenceManager} from '../api-reference-list/api-reference-manager.s
 import {ApiItemType} from '../interfaces/api-item-type';
 import {RouterTestingModule} from '@angular/router/testing';
 import {By} from '@angular/platform-browser';
+import {input} from '@angular/core';
 
 describe('ApiItemsSection', () => {
   let component: ApiItemsSection;
@@ -66,7 +67,7 @@ describe('ApiItemsSection', () => {
   });
 
   it('should render star icon for featured group', () => {
-    component.group = fakeFeaturedGroup;
+    component.group = TestBed.runInInjectionContext(() => input(fakeFeaturedGroup));
     fixture.detectChanges();
 
     const starIcon = fixture.debugElement.query(By.css('.adev-api-items-section-header docs-icon'));
@@ -75,7 +76,7 @@ describe('ApiItemsSection', () => {
   });
 
   it('should not render star icon for standard group', () => {
-    component.group = fakeGroup;
+    component.group = TestBed.runInInjectionContext(() => input(fakeGroup));
     fixture.detectChanges();
 
     const starIcon = fixture.debugElement.query(By.css('.adev-api-items-section-header docs-icon'));
@@ -84,7 +85,7 @@ describe('ApiItemsSection', () => {
   });
 
   it('should render list of all APIs of provided group', () => {
-    component.group = fakeFeaturedGroup;
+    component.group = TestBed.runInInjectionContext(() => input(fakeFeaturedGroup));
     fixture.detectChanges();
 
     const apis = fixture.debugElement.queryAll(By.css('.adev-api-items-section-grid li'));
@@ -93,7 +94,7 @@ describe('ApiItemsSection', () => {
   });
 
   it('should display deprecated icon for deprecated API', () => {
-    component.group = fakeFeaturedGroup;
+    component.group = TestBed.runInInjectionContext(() => input(fakeFeaturedGroup));
     fixture.detectChanges();
 
     const deprecatedApiIcons = fixture.debugElement.queryAll(
@@ -107,7 +108,7 @@ describe('ApiItemsSection', () => {
   });
 
   it('should display star icon for featured API', () => {
-    component.group = fakeFeaturedGroup;
+    component.group = TestBed.runInInjectionContext(() => input(fakeFeaturedGroup));
     fixture.detectChanges();
 
     const featuredApiIcons = fixture.debugElement.queryAll(

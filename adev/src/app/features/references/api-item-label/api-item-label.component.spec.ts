@@ -10,6 +10,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import ApiItemLabel from './api-item-label.component';
 import {ApiItemType} from '../interfaces/api-item-type';
+import {input} from '@angular/core';
 
 describe('ApiItemLabel', () => {
   let component: ApiItemLabel;
@@ -21,11 +22,12 @@ describe('ApiItemLabel', () => {
     });
     fixture = TestBed.createComponent(ApiItemLabel);
     component = fixture.componentInstance;
-    fixture.detectChanges();
   });
 
   it('should by default display short label for Class', () => {
-    component.type = ApiItemType.CLASS;
+    component.apiItemType = TestBed.runInInjectionContext(() =>
+      input<ApiItemType>(ApiItemType.CLASS),
+    );
     fixture.detectChanges();
 
     const label = fixture.nativeElement.innerText;
@@ -34,8 +36,11 @@ describe('ApiItemLabel', () => {
   });
 
   it('should display full label for Class when labelMode equals full', () => {
-    component.type = ApiItemType.CLASS;
-    component.mode = 'full';
+    component.apiItemType = TestBed.runInInjectionContext(() =>
+      input<ApiItemType>(ApiItemType.CLASS),
+    );
+    component.labelMode = TestBed.runInInjectionContext(() => input<'short' | 'full'>('full'));
+
     fixture.detectChanges();
 
     const label = fixture.nativeElement.innerText;
@@ -44,8 +49,10 @@ describe('ApiItemLabel', () => {
   });
 
   it('should display short label for Class when labelMode equals short', () => {
-    component.type = ApiItemType.CLASS;
-    component.mode = 'short';
+    component.apiItemType = TestBed.runInInjectionContext(() =>
+      input<ApiItemType>(ApiItemType.CLASS),
+    );
+    component.labelMode = TestBed.runInInjectionContext(() => input<'short' | 'full'>('short'));
     fixture.detectChanges();
 
     const label = fixture.nativeElement.innerText;

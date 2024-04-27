@@ -13,6 +13,7 @@ import {Terminal} from './terminal.component';
 import {TerminalHandler, TerminalType} from './terminal-handler.service';
 import {WINDOW} from '@angular/docs';
 import {FakeEventTarget} from '@angular/docs/testing';
+import {input} from '@angular/core';
 
 describe('Terminal', () => {
   let component: Terminal;
@@ -41,7 +42,9 @@ describe('Terminal', () => {
 
     fixture = TestBed.createComponent(Terminal);
     component = fixture.componentInstance;
-    component.type = TerminalType.READONLY;
+    component.type = TestBed.runInInjectionContext(() =>
+      input<TerminalType>(TerminalType.READONLY),
+    );
     fixture.detectChanges();
   });
 

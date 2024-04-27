@@ -6,7 +6,7 @@
  * found in the LICENSE file at https://angular.dev/license
  */
 
-import {ChangeDetectionStrategy, Component, Input, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {ApiItemType} from '../interfaces/api-item-type';
 import {ApiLabel} from '../pipes/api-label.pipe';
 
@@ -22,13 +22,6 @@ import {ApiLabel} from '../pipes/api-label.pipe';
   imports: [ApiLabel],
 })
 export default class ApiItemLabel {
-  @Input({required: true}) set type(value: ApiItemType) {
-    this.apiItemType.set(value);
-  }
-  @Input({required: true}) set mode(value: 'short' | 'full') {
-    this.labelMode.set(value);
-  }
-
-  protected apiItemType = signal<ApiItemType | undefined>(undefined);
-  protected labelMode = signal<'short' | 'full'>('short');
+  apiItemType = input.required<ApiItemType>({alias: 'type'});
+  labelMode = input<'short' | 'full'>('short', {alias: 'mode'});
 }

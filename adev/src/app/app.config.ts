@@ -31,6 +31,7 @@ import {
   TitleStrategy,
   createUrlTreeFromSnapshot,
   provideRouter,
+  withComponentInputBinding,
   withInMemoryScrolling,
   withViewTransitions,
 } from '@angular/router';
@@ -49,6 +50,7 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(
       routes,
+      withComponentInputBinding(),
       withInMemoryScrolling({anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled'}),
       withViewTransitions({
         onViewTransitionCreated: ({transition, to}) => {
